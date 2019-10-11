@@ -2,7 +2,8 @@
   <div class="bx">
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(image, index) in images" :key="index">
-        <img :src="image" width="100%" height="auto" />
+        <!-- <img :src="image" width="100%" height="100%" /> -->
+        <van-image :src="image" fill/>
       </van-swipe-item>
     </van-swipe>
     <van-grid :column-num="3">
@@ -42,8 +43,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .bx {
-  padding: 10px;
-  height: 100%;
+  height: calc(100vh - 20px);
   box-sizing: border-box;
   .van-grid{
       margin-top: 20px;

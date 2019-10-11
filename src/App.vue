@@ -10,8 +10,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  padding: 10px;
+  background-color: rgb(143, 228, 135);
   color: #2c3e50;
-  height: 100vh;
 }
 
 </style>

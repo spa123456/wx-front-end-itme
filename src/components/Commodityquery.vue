@@ -1,12 +1,14 @@
 <template>
+  <!-- 这里应该是全部店铺的商品详情  所以应该带有收索功能的操作界面 -->
   <div class="bx">
     <van-nav-bar
       :title="titlename"
       left-text="返回"
       left-arrow
-      :fixed=true
+      :fixed="true"
       @click-left="onClickLeft"
     />
+
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-cell v-for="(item,index) in list" :key="index">
         <van-image width="100%" :src="item.url" />
@@ -16,7 +18,7 @@
         </p>
       </van-cell>
     </van-list>
-    <van-goods-action>
+    <van-goods-action >
       <van-goods-action-icon icon="chat-o" text="客服" />
       <van-goods-action-icon icon="cart-o" text="购物车" info="5" />
       <van-goods-action-button type="warning" text="加入购物车" />
@@ -98,7 +100,8 @@ export default {
       ],
       loading: false,
       finished: false,
-      titlename:''
+      titlename: "",
+
     };
   },
   created() {
@@ -114,11 +117,11 @@ export default {
       }
     },
     getroute() {
-    //   console.log(this.$route.query.id);
-      this.titlename = this.$route.query.name
+      //   console.log(this.$route.query.id);
+      this.titlename = this.$route.query.name;
     },
-    onClickLeft(){
-        this.$router.go(-1)
+    onClickLeft() {
+      this.$router.go(-1);
     }
   }
 };
