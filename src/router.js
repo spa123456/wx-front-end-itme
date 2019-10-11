@@ -27,5 +27,10 @@ export default new Router({
       name:'commodityquery',
       component:() => import("./components/Commodityquery.vue")
     },
+    {
+      path:'/address',
+      name:'address',
+      component:() => import("./components/address/Address.vue")
+    },
   ]
 })
