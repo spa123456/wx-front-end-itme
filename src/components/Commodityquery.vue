@@ -18,10 +18,10 @@
         </p>
       </van-cell>
     </van-list>
-    <van-goods-action >
+    <van-goods-action>
       <van-goods-action-icon icon="chat-o" text="客服" />
       <van-goods-action-icon icon="cart-o" text="购物车" info="5" />
-      <van-goods-action-button type="warning" text="加入购物车" />
+      <van-goods-action-button type="warning" text="加入购物车" @click="setshowsku"/>
       <van-goods-action-button type="danger" text="立即购买" />
     </van-goods-action>
   </div>
@@ -101,7 +101,6 @@ export default {
       loading: false,
       finished: false,
       titlename: "",
-
     };
   },
   created() {
@@ -122,7 +121,26 @@ export default {
     },
     onClickLeft() {
       this.$router.go(-1);
-    }
+    },
+    /*
+    **  @description 设置sku显示隐藏
+    **  @param {} 
+    **  @return 
+    **  @author shipingan
+    */
+    setshowsku(){
+      this.show = true;
+      console.log("aaa");
+      
+    },
   }
 };
 </script>
+<style lang="less" scoped>
+.bx{
+  .van-list{
+    margin-top: 46px;
+    margin-bottom: 40px;
+  }
+}
+</style>

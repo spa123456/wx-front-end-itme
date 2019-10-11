@@ -135,7 +135,8 @@ export default {
         { title: "衣服", url: "huawang", icon: "service-o" },
         { title: "日常用品", url: "huawang", icon: "diamond-o" },
         { title: "玩具", url: "huawang", icon: "smile-comment-o" }
-      ]
+      ],
+      active:'',
     };
   },
   created() {
@@ -186,10 +187,10 @@ export default {
     }
   }
   .list-bx {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 70px);
     overflow: auto;
     .van-tabbar{
-      background-color: rgb(248, 132, 97);
+      background-color: rgb(245, 228, 223);
     }
     .van-list{
       margin-bottom: 40px;
