@@ -9,7 +9,7 @@
       v-if="!flag"
     >
       <van-button type="primary" @click="paymoney()" v-if="addresslistdata">确定选择</van-button>
-      <van-button type="primary" disabled @click="paymoney()" v-if="!addresslistdata">确定选择</van-button>
+      <van-button type="primary" disabled v-if="!addresslistdata">确定选择</van-button>
     </van-address-list>
 
     <van-nav-bar title="地址编辑" left-text="返回" left-arrow v-if="flag" @click-left="onClickLeft" />
