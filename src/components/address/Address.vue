@@ -167,6 +167,7 @@ export default {
      **  @author shipingan
      */
     onClickLeft() {
+      this.$router.go(-1);
       this.flag = false;
     },
     /*
@@ -178,15 +179,7 @@ export default {
     paymoney() {
       this.$router.push("submitorder");
     },
-    /*
-     **  @description 导航返回按钮
-     **  @param {}
-     **  @return
-     **  @author shipingan
-     */
-    onClickLeft() {
-      this.$router.go(-1);
-    },
+
     onadressClickLeft() {
       this.flag = false;
     }
