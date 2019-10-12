@@ -32,5 +32,10 @@ export default new Router({
       name:'address',
       component:() => import("./components/address/Address.vue")
     },
+    {
+      path:'/submitorder',
+      name:'submitorder',
+      component:() => import("./components/payorder/Submitorder.vue")
+    },
   ]
 })

@@ -1,6 +1,7 @@
 <template>
   <div class="bx">
-    <p v-if="!addresslistdata">请添加地址</p>
+    <van-nav-bar title="订单确认" left-text="返回" left-arrow @click-left="onClickLeft" v-if="!flag" />
+    <p v-if="!addresslistdata" style="color:#ccc">没有地址数据，请添加地址</p>
     <van-address-list
       v-model="chosenAddressId"
       :list="addresslist"
@@ -12,7 +13,13 @@
       <van-button type="primary" disabled v-if="!addresslistdata">确定选择</van-button>
     </van-address-list>
 
-    <van-nav-bar title="地址编辑" left-text="返回" left-arrow v-if="flag" @click-left="onClickLeft" />
+    <van-nav-bar
+      title="地址编辑"
+      left-text="返回"
+      left-arrow
+      v-if="flag"
+      @click-left="onadressClickLeft"
+    />
     <van-address-edit
       :area-list="areaList"
       show-postal
@@ -32,6 +39,17 @@ export default {
       chosenAddressId: "1", //当前选中的地址列表ID
       addresslist: [
         //地址列表数据展示
+        {
+          //存放准备传参的地址对象
+          id: "1",
+          name: "时平安",
+          address: "四川省成都市郫都区天河路核能橙中心2-2-1",
+          tel: "17708160446",
+          areaCode: "510117", //区域编码
+          isDefault: false, //默认选择项
+          addressDetail: "天河路核能橙中心2-2-1", //详情地址
+          postalCode: "620000" //邮政编码
+        }
       ],
       addresslistdata: true, //判断是否有数据
       areaList: arealist, //地区列表----引入的arealist.js文件
@@ -101,7 +119,7 @@ export default {
           addressDetail: item.addressDetail,
           postalCode: item.postalCode //邮政编码
         };
-        this.addresslist.map((res,index) => {
+        this.addresslist.map((res, index) => {
           if (res.id == this.addressjson.id) {
             this.addresslist[index] = newaddress;
             this.chosenAddressId = this.addressjson.id;
@@ -158,7 +176,19 @@ export default {
      **  @author shipingan
      */
     paymoney() {
-      this.$router.push("commodityquery");
+      this.$router.push("submitorder");
+    },
+    /*
+     **  @description 导航返回按钮
+     **  @param {}
+     **  @return
+     **  @author shipingan
+     */
+    onClickLeft() {
+      this.$router.go(-1);
+    },
+    onadressClickLeft() {
+      this.flag = false;
     }
   }
 };
@@ -169,6 +199,7 @@ export default {
   height: calc(100vh - 20px);
   .van-address-list {
     padding: 0;
+    height: calc(100vh - 140px);
     .van-button {
       margin-top: 20px;
       width: 100%;
