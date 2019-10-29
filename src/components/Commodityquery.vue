@@ -58,77 +58,12 @@
 export default {
   data() {
     return {
-      list: [
-        {
-          url: "https://img.yzcdn.cn/vant/apple-1.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 1
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-2.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 2
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-3.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 3
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-4.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 4
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-2.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 5
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-3.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 6
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-8.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 7
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-2.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 8
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-6.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 9
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-3.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 10
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-3.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 11
-        }
-      ],
+      list: [],//产品详情列表
       loading: false,
       finished: false,
-      titlename: "",
+      titlename: "",//查询产品的mingzi
+      filename: "",//查询产品的数据表名
+      id:'',//产品对应数据表的id
 
       buyshow: false,
       show: false,
@@ -245,8 +180,10 @@ export default {
       }
     },
     getroute() {
-      //   console.log(this.$route.query.id);
-      this.titlename = this.$route.query.name;
+      this.filename = this.$route.query.filename;
+      this.id = this.$route.query.id;
+      console.log(this.filename + this.id);
+      
     },
     onClickLeft() {
       this.$router.go(-1);

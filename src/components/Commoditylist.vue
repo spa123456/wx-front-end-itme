@@ -40,7 +40,7 @@
         </van-cell>
       </van-list>
       <div>
-        <van-tabbar v-model="active" route="">
+        <van-tabbar v-model="active" route>
           <van-tabbar-item icon="home-o" url="menusbar">首页</van-tabbar-item>
           <van-tabbar-item icon="search">收索</van-tabbar-item>
           <van-tabbar-item icon="friends-o">人脉</van-tabbar-item>
@@ -54,97 +54,38 @@
 export default {
   data() {
     return {
-      list: [
-        {
-          url: "https://img.yzcdn.cn/vant/apple-1.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 1
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-2.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 2
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-3.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 3
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-4.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 4
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-5.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 5
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-6.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 6
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-7.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 7
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-8.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 8
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-4.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 9
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-7.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 10
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-3.jpg",
-          name: "尿不湿",
-          price: "99",
-          id: 11
-        }
-      ],
+      list: [],
       loading: false,
       finished: false,
       titlename: "", //接受路由传参待使用
       value: "", //收索框绑定数据
       options: [
-        { title: "花王", url: "huawang", icon: "gift-o" },
-        { title: "贝因美", url: "huawang", icon: "fire-o" },
-        { title: "宜婴", url: "huawang", icon: "coupon-o" },
-        { title: "大王", url: "huawang", icon: "bag-o" },
-        { title: "趣多多", url: "huawang", icon: "gem-o" },
-        { title: "衣服", url: "huawang", icon: "service-o" },
-        { title: "日常用品", url: "huawang", icon: "diamond-o" },
-        { title: "玩具", url: "huawang", icon: "smile-comment-o" }
+        { title: "尿不湿", url: "diapers", icon: "gift-o" },
+        { title: "特产", url: "specialtys", icon: "fire-o" },
+        { title: "每日特惠", url: "dailyDeal", icon: "coupon-o" },
+        { title: "周日狂欢", url: "CarnivalOnSunday", icon: "bag-o" },
+        { title: "整点开抢", url: "integralBuy", icon: "gem-o" },
+        { title: "衣服", url: "clothes", icon: "service-o" },
+        { title: "日常用品", url: "dailySupplies", icon: "diamond-o" },
+        { title: "玩具", url: "playthings", icon: "smile-comment-o" }
       ],
-      active:'',
+      active: ""
     };
   },
   created() {
     this.getrouterquery();
+    this.gettodaylist();
   },
   methods: {
+    /*
+     **  @description 接受到路由传过来的判断点击哪个按钮
+     **  @param {}
+     **  @return
+     **  @author shipingan
+     */
     getrouterquery() {
       this.titlename = this.$route.query.name;
+      console.log(this.titlename);
     },
     onLoad() {
       if (this.list.length >= this.list.length) {
@@ -156,17 +97,61 @@ export default {
       let url = "/commodityquery";
       let query = {
         id: val.id,
-        name: val.name
+        filename:val.filename,
+        titlename:val.name
       };
       this.$router.push({ path: url, query: query });
     },
     onClickLeft() {
       this.$router.go(-1);
     },
-    gotohome(){
-      this.$router.push("menusbar")
+    gotohome() {
+      this.$router.push("menusbar");
+    },
+    /*
+     **  @description 以下是获取数据库的方法
+     **  @param {}
+     **  @return
+     **  @author shipingan
+     */
+    gettodaylist() {
+      this.query("diaper"); // 一。查询diapers（尿不湿）数据表中的数据
+      this.query("specialty");
+    },
+    /*
+     **  @description // 查询几个数据表，把每张表的第一条或者几条数据拿出来渲染-----------封装一个函数
+     **  @param {}
+     **  @return
+     **  @author shipingan
+     */
+    query(filename) {
+      this.$axios
+        .post("http://127.0.0.1:3001/getdiaperlistdetalis", {
+          filename: filename
+        })
+        .then(res => {
+          //通过address查询主图展示在页面
+          res.data.map((item, index) => {
+            if (index <= 2) {
+              this.$axios
+                .post("http://127.0.0.1:3001/getmainimage", {
+                  address: item.address
+                })
+                .then(mainres => {
+                  let listarray = {
+                    url: JSON.parse(mainres.data).mainimageurl[0],
+                    filename: filename, //查询的哪个表
+                    id: item.id, //产品在对应表中的ID
+                    address: item.address, //请求图片的地址
+                    name: item.name, //产品的名称
+                    price: item.money //产品的价格
+                  };
+                  this.list.push(listarray);
+                });
+            }
+          });
+        });
     }
-
   }
 };
 </script>
@@ -189,12 +174,12 @@ export default {
   .list-bx {
     height: calc(100vh - 70px);
     overflow: auto;
-    .van-tabbar{
+    .van-tabbar {
       background-color: rgb(245, 228, 223);
     }
-    .van-list{
+    .van-list {
       margin-bottom: 40px;
-      .van-cell{
+      .van-cell {
         margin-bottom: 10px;
       }
     }
